@@ -9,6 +9,7 @@ data <- read.csv("Microsoft_Stock.csv")
 # Convert 'Date' column to datetime format using mdy_hms from lubridate
 data$Date <- mdy_hms(data$Date)
 
+
 # Perform the Augmented Dickey-Fuller test on the 'Close' column
 dickey_fuller_test <- adf.test(data$Close, alternative = "stationary")
 
@@ -40,3 +41,8 @@ if (dickey_fuller_test$p.value > 0.05) {
 } else {
   print("The data is already stationary. No differencing required.")
 }
+
+
+# ACF and PACF of the differenced series
+acf(diff(data$Close), main = "ACF of Differenced Series")
+pacf(diff(data$Close), main = "PACF of Differenced Series")
